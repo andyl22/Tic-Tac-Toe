@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body, main {
+    height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    background: rgb(57, 121, 133);
+    color: white;
+    padding: 50px 0px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 310px;
+    width: 310px;
+}
+
+.board-partition-mid {
+    display: flex;
+    height: 100px;
+    width: 300px;
+}
+
+.board-partition-top {
+    display: flex;
+    height: 100px;
+    width: 300px;
+    border-top: none !important;
+}
+
+.board-partition-bot {
+    display: flex;
+    height: 100px;
+    width: 300px;
+}
+
+.partition-columns {
+    height: 100px;
+    width: 100px;
+    border-top: 1px solid;
+    border-left: 1px solid;
+}
+
+#partition-one, #partition-two, #partition-three {
+    border-top: none;
+}
+
+#partition-one, #partition-four, #partition-seven {
+    border-left: none;
+}
