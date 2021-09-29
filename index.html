@@ -13,7 +13,24 @@
         <h1>Tic-Tac-Toe</h1>
     </header>
     <main>
-        <div class="game-container">
+        <div class="game-inputs-container">
+            <button id="restart">Restart Game</button>
+            <div class="players">
+                <div class="player" id="player-one">
+                    Player One
+                    <input type="text" placeholder="Name" id="pone-name">
+                    <input type="text" placeholder="Weapon" id="pone-weapon">
+                    <input type="submit" value="Set Player One" id="pone-lock">
+                </div>
+                <div class="player" id="player-two">
+                    Player Two
+                    <input type="text" placeholder="Name" id="ptwo-name">
+                    <input type="text" placeholder="Weapon" id="ptwo-weapon">
+                    <input type="submit" value="Set Player Two" id="ptwo-lock">
+                </div>
+            </div> 
+        </div>
+        <div class="board-container">
             <div class="board-partition-top">
                 <div class="partition-columns" id="partition-one" data-partition-number="0"></div>
                 <div class="partition-columns" id="partition-two" data-partition-number="1"></div>

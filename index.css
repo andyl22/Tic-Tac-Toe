@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 html, body, main {
@@ -24,8 +25,43 @@ header {
 
 main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.game-inputs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0px 0px 30px 0px;
+}
+
+.players {
+    display: flex;
+    gap: 30px;
+}
+
+input[type="submit"], button {
+    border: 1px solid rgb(224, 212, 212);
+    border-radius: 4px;
+    height: 25px;
+    width: 100px;
+}
+
+#restart {
+    height: 40px;
+    width: 150px;
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+}
+
+#player-one, #player-two {
+    gap: 5px;
 }
 
 .game-container {

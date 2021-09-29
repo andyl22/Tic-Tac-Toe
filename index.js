@@ -14,8 +14,7 @@ const playerFactory = (name, weapon) => {
 };
 
 const gameBoard = (() => {
-
-    console.log("Is this executed?");
+    
     let _boardPartitions = _selectBoardPartitions();
     let _boardState = ["", "", "", "", "", "", "", "", ""];
     _setUpListeners();
@@ -128,8 +127,24 @@ const gameController = (() => {
 
 })();
 
-const player1 = playerFactory("Andy", "A");
-const player2 = playerFactory("Yang", "Y");
+let pone = document.querySelector("#pone-lock");
+let ptwo = document.querySelector("#ptwo-lock");
+let ponename = document.querySelector("#pone-name");
+let ptwoname = document.querySelector("#ptwo-name");
+let poneweapon = document.querySelector("#pone-weapon");
+let ptwoweapon = document.querySelector("#ptwo-weapon");
+pone.addEventListener("click", createPlayer);
+ptwo.addEventListener("click", createPlayer2);
 
-gameController.playerTurn = player2;
-console.log(gameController.playerTurn);
+let player1;
+let player2;
+
+function createPlayer() {
+    player1 = playerFactory(ponename.value, poneweapon.value);
+}
+
+function createPlayer2() {
+    player2 = playerFactory(ptwoname.value, ptwoweapon.value);
+    gameController.playerTurn = player2;
+}
+
