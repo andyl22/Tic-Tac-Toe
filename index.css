@@ -75,3 +75,8 @@ main {
 #partition-one, #partition-four, #partition-seven {
     border-left: none;
 }
+
+.winner {
+    text-shadow: rgb(255, 217, 0) 0px 0 5px;
+    font-size: 40px;
+}

@@ -13,7 +13,7 @@ const playerFactory = (name, weapon) => {
 
 };
 
-const gameBoard = (()=> {
+const gameBoard = (() => {
 
     console.log("Is this executed?");
     let _boardPartitions = _selectBoardPartitions();
@@ -38,9 +38,9 @@ const gameBoard = (()=> {
     }
 
     function _makeMove(e) {
+        _saveBoardState(e);
         e.target.textContent = gameController.playerTurn.weapon;
         gameController.switchTurns();
-        _saveBoardState(e);
     }
 
     function _saveBoardState(e) {
@@ -56,21 +56,62 @@ const gameBoard = (()=> {
         _boardState[e.target.getAttribute("data-partition-number")] = gameController.playerTurn.weapon;
     }
 
+    function removeAllListeners() {
+        _boardPartitions.forEach(partition => partition.removeEventListener("click", _makeMove));
+    }
+
+    function highlightWin(winningArray) {
+        winningArray.forEach(indexNumber => _boardPartitions[indexNumber].classList.add("winner"));
+    }
+
+    function displayWinner(winnerName) {
+        console.log(winnerName + " won!");
+    }
+
     return {
         get boardState() {
             return _boardState;
+        },
+        finalizeWinner(evaluation, winnerName) {
+            removeAllListeners();
+            highlightWin(evaluation);
+            displayWinner(winnerName);
         }
     }
 })();
 
-const gameController = (()=> {
+const gameController = (() => {
     let _playerTurn;
 
-    const switchTurns = function() {
-        if (_playerTurn==player1) {
-            _playerTurn=player2;
+    const detectWinner = function (boardState) {
+        let a = boardState; // setting this to short variable for readability
+        evaluateBoardState(a, player1);
+        evaluateBoardState(a, player2);
+    }
+
+    function evaluateBoardState(a, player) {
+        let weapon = player.weapon;
+        let evaluation = 
+        (a[0] == (weapon) && a[1] == (weapon) && a[2] == (weapon)) ? [0, 1, 2] :
+        (a[3] == (weapon) && a[4] == (weapon) && a[5] == (weapon)) ? [3, 4, 5] :
+        (a[6] == (weapon) && a[7] == (weapon) && a[8] == (weapon)) ? [6, 7, 8] :
+        (a[0] == (weapon) && a[3] == (weapon) && a[6] == (weapon)) ? [0, 3, 6] :
+        (a[1] == (weapon) && a[4] == (weapon) && a[7] == (weapon)) ? [1, 4, 7] :
+        (a[2] == (weapon) && a[5] == (weapon) && a[8] == (weapon)) ? [2, 5, 8] :
+        (a[0] == (weapon) && a[4] == (weapon) && a[8] == (weapon)) ? [0, 4, 8] :
+        (a[2] == (weapon) && a[4] == (weapon) && a[6] == (weapon)) ? [2, 4, 6] :
+        "No winner";
+        if (evaluation != "No winner") {
+            gameBoard.finalizeWinner(evaluation, player.name);
+        }
+    }
+
+    const switchTurns = function () {
+        detectWinner(gameBoard.boardState);
+        if (_playerTurn == player1) {
+            _playerTurn = player2;
         } else {
-            _playerTurn= player1;
+            _playerTurn = player1;
         }
         console.log(`${_playerTurn.name}'s turn.`);
     }
