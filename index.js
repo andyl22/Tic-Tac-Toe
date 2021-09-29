@@ -34,6 +34,15 @@ const gameBoard = (() => {
 
     function _setUpListeners() {
         _boardPartitions.forEach(partition => partition.addEventListener("click", _makeMove));
+        document.getElementById("restart").addEventListener("click", _restartBoard);
+    }
+    
+    function _restartBoard() {
+        _boardPartitions.forEach(partition=>partition.textContent="");
+        _boardPartitions.forEach(partition=>partition.classList.remove("winner"));
+        _boardState = ["", "", "", "", "", "", "", "", ""];
+        _removeAllListeners();
+        _setUpListeners();
     }
 
     function _makeMove(e) {
@@ -55,15 +64,15 @@ const gameBoard = (() => {
         _boardState[e.target.getAttribute("data-partition-number")] = gameController.playerTurn.weapon;
     }
 
-    function removeAllListeners() {
+    function _removeAllListeners() {
         _boardPartitions.forEach(partition => partition.removeEventListener("click", _makeMove));
     }
 
-    function highlightWin(winningArray) {
+    function _highlightWin(winningArray) {
         winningArray.forEach(indexNumber => _boardPartitions[indexNumber].classList.add("winner"));
     }
 
-    function displayWinner(winnerName) {
+    function _displayWinner(winnerName) {
         console.log(winnerName + " won!");
     }
 
@@ -72,9 +81,9 @@ const gameBoard = (() => {
             return _boardState;
         },
         finalizeWinner(evaluation, winnerName) {
-            removeAllListeners();
-            highlightWin(evaluation);
-            displayWinner(winnerName);
+            _removeAllListeners();
+            _highlightWin(evaluation);
+            _displayWinner(winnerName);
         }
     }
 })();
@@ -82,10 +91,12 @@ const gameBoard = (() => {
 const gameController = (() => {
     let _playerTurn;
 
-    const detectWinner = function (boardState) {
+    function detectWinner(boardState) {
         let a = boardState; // setting this to short variable for readability
-        evaluateBoardState(a, player1);
-        evaluateBoardState(a, player2);
+        if (evaluateBoardState(a, player1) || evaluateBoardState(a, player2)) {
+            return true;
+        }
+        return false;
     }
 
     function evaluateBoardState(a, player) {
@@ -99,20 +110,21 @@ const gameController = (() => {
         (a[2] == (weapon) && a[5] == (weapon) && a[8] == (weapon)) ? [2, 5, 8] :
         (a[0] == (weapon) && a[4] == (weapon) && a[8] == (weapon)) ? [0, 4, 8] :
         (a[2] == (weapon) && a[4] == (weapon) && a[6] == (weapon)) ? [2, 4, 6] :
-        "No winner";
-        if (evaluation != "No winner") {
+        false;
+        if (evaluation != false) {
             gameBoard.finalizeWinner(evaluation, player.name);
         }
     }
 
     const switchTurns = function () {
-        detectWinner(gameBoard.boardState);
+        if (detectWinner(gameBoard.boardState)) {
+            return;
+        }
         if (_playerTurn == player1) {
             _playerTurn = player2;
         } else {
             _playerTurn = player1;
         }
-        console.log(`${_playerTurn.name}'s turn.`);
     }
 
     return {
@@ -127,24 +139,31 @@ const gameController = (() => {
 
 })();
 
-let pone = document.querySelector("#pone-lock");
-let ptwo = document.querySelector("#ptwo-lock");
-let ponename = document.querySelector("#pone-name");
-let ptwoname = document.querySelector("#ptwo-name");
-let poneweapon = document.querySelector("#pone-weapon");
-let ptwoweapon = document.querySelector("#ptwo-weapon");
-pone.addEventListener("click", createPlayer);
-ptwo.addEventListener("click", createPlayer2);
+_setUpListeners();
+function _setUpListeners() {
+    let pone = document.querySelector("#pone-lock");
+    let ptwo = document.querySelector("#ptwo-lock");
+    pone.addEventListener("click", createPlayer);
+    ptwo.addEventListener("click", createPlayer);
+}
+
+function createPlayer(e) {
+    let name = e.path[1].childNodes[1].value;
+    let weapon = e.path[1].childNodes[3].value;
+    let player = e.path[1].id;
+    if (player=="player1"){
+        player1 = playerFactory(name, weapon);
+    } else {
+        player2 = playerFactory(name, weapon);
+        gameController.playerTurn = player2;
+    }
+}
 
 let player1;
 let player2;
 
-function createPlayer() {
-    player1 = playerFactory(ponename.value, poneweapon.value);
-}
 
-function createPlayer2() {
-    player2 = playerFactory(ptwoname.value, ptwoweapon.value);
-    gameController.playerTurn = player2;
-}
+
+
+
 

@@ -60,7 +60,7 @@ input[type="submit"], button {
     flex-direction: column;
 }
 
-#player-one, #player-two {
+#player1, #player2 {
     gap: 5px;
 }
 
