@@ -5,6 +5,7 @@
 }
 
 html, body, main {
+    background: rgba(181, 106, 106, 0.1);
     height: 100vh;
 }
 
@@ -21,44 +22,48 @@ header {
     background: rgb(57, 121, 133);
     color: white;
     padding: 50px 0px;
+    font-size: 32px;
 }
 
 main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
 .game-inputs-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 10px;
-    margin: 0px 0px 30px 0px;
+    margin: 100px 0px 30px 0px;
 }
 
 .players {
     display: flex;
+    font-size: 14px;
+    font-weight: bold;
     gap: 30px;
 }
 
-input[type="submit"], button {
+input[type=text] {
+    height: 25px;
+    width: 140px;
+    padding: 5px;
+}
+
+input[type=submit], button {
     border: 1px solid rgb(224, 212, 212);
     border-radius: 4px;
     height: 25px;
     width: 100px;
 }
 
-input[type="submit"]:hover, button:hover {
+input[type=submit]:hover, button:hover {
     background-color: rgb(223, 219, 219);
     transform: scale(1.01);
 
-}
-
-#restart {
-    height: 40px;
-    width: 150px;
 }
 
 .player {
@@ -106,8 +111,13 @@ input[type="submit"]:hover, button:hover {
     font-size: 30px;
     height: 100px;
     width: 100px;
-    border-top: 1px solid;
-    border-left: 1px solid;
+    border-top: 2px solid gray;
+    border-left: 2px solid gray;
+    background: rgb(243, 255, 238);
+}
+
+.partition-columns:hover {
+    background: rgb(242, 239, 239);
 }
 
 #partition-one, #partition-two, #partition-three {
@@ -121,6 +131,12 @@ input[type="submit"]:hover, button:hover {
 .winner {
     text-shadow: rgb(255, 217, 0) 0px 0 5px;
     font-size: 40px;
+}
+
+#restart {
+    margin-top: 50px;
+    height: 40px;
+    width: 130px;
 }
 
 #winner {

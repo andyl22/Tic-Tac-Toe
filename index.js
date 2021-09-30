@@ -76,7 +76,6 @@ const gameBoard = (() => {
     function _displayWinner(winnerName) {
         document.getElementById("winner").textContent = `${winnerName} wins!`;
     }
-
     return {
         get boardState() {
             return _boardState;
@@ -85,6 +84,7 @@ const gameBoard = (() => {
             _removeAllListeners();
             _highlightWin(evaluation);
             _displayWinner(winnerName);
+            _showRestart();
         }
     }
 })();
