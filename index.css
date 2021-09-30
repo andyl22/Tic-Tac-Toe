@@ -50,6 +50,12 @@ input[type="submit"], button {
     width: 100px;
 }
 
+input[type="submit"]:hover, button:hover {
+    background-color: rgb(223, 219, 219);
+    transform: scale(1.01);
+
+}
+
 #restart {
     height: 40px;
     width: 150px;
@@ -115,4 +121,11 @@ input[type="submit"], button {
 .winner {
     text-shadow: rgb(255, 217, 0) 0px 0 5px;
     font-size: 40px;
+}
+
+#winner {
+    margin-top: 30px;
+    font-weight: bolder;
+    font-size:30px;
+    height: 30px;
 }

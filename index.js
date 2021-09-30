@@ -43,6 +43,7 @@ const gameBoard = (() => {
         _boardState = ["", "", "", "", "", "", "", "", ""];
         _removeAllListeners();
         _setUpListeners();
+        document.getElementById("winner").textContent = "";
     }
 
     function _makeMove(e) {
@@ -52,11 +53,11 @@ const gameBoard = (() => {
     }
 
     function _saveBoardState(e) {
-        _removeListener(e);
+        _removeSelectedListener(e);
         _setBoardState(e);
     }
 
-    function _removeListener(e) {
+    function _removeSelectedListener(e) {
         e.target.removeEventListener("click", _makeMove);
     }
 
@@ -73,14 +74,14 @@ const gameBoard = (() => {
     }
 
     function _displayWinner(winnerName) {
-        console.log(winnerName + " won!");
+        document.getElementById("winner").textContent = `${winnerName} wins!`;
     }
 
     return {
         get boardState() {
             return _boardState;
         },
-        finalizeWinner(evaluation, winnerName) {
+        declareWinner(evaluation, winnerName) {
             _removeAllListeners();
             _highlightWin(evaluation);
             _displayWinner(winnerName);
@@ -112,7 +113,7 @@ const gameController = (() => {
         (a[2] == (weapon) && a[4] == (weapon) && a[6] == (weapon)) ? [2, 4, 6] :
         false;
         if (evaluation != false) {
-            gameBoard.finalizeWinner(evaluation, player.name);
+            gameBoard.declareWinner(evaluation, player.name);
         }
     }
 
@@ -139,8 +140,8 @@ const gameController = (() => {
 
 })();
 
-_setUpListeners();
-function _setUpListeners() {
+setUpListeners();
+function setUpListeners() {
     let pone = document.querySelector("#pone-lock");
     let ptwo = document.querySelector("#ptwo-lock");
     pone.addEventListener("click", createPlayer);
@@ -161,9 +162,3 @@ function createPlayer(e) {
 
 let player1;
 let player2;
-
-
-
-
-
-
